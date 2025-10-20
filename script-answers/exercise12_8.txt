@@ -1,0 +1,29 @@
+Exercise 12.8: Mongo command-line interface
+===========================================
+
+Step 1: Check MongoDB container is running
+$ docker container ls
+
+Step 2: Access MongoDB container using docker exec
+$ docker exec -it todo-backend-mongo-1 bash
+
+Step 3: Open MongoDB CLI with authentication
+mongosh -u root -p example
+
+Step 4: Show databases
+show dbs
+
+Step 5: Use the correct database
+use the_database
+
+Step 6:
+show collections todos
+
+Step 7: View existing todos
+db.todos.find({})
+
+Step 8: Insert new todo
+db.todos.insertOne({text: "Increase the number of tools in my tool belt", done: false})
+
+Step 9: Verify the insertion
+db.todos.find({})
