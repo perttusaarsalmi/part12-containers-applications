@@ -1,0 +1,6 @@
+services:
+  server:
+    build: .
+    ports:
+      - "3000:3000"
+    container_name: todo-backend-server
