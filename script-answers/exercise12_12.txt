@@ -1,0 +1,42 @@
+Exercise 12.12: Persisting data in Redis
+======================================
+
+PART 1: Test Redis data persistence (current setup)
+---------------------------------------------------
+
+Step : Start the application and create some test data
+-------------------------------------------------------
+$ cd todo-app/todo-backend
+$ docker compose -f docker-compose.dev.yml up -d
+$ # Start the application server
+$ cd todo-app/todo-backend; $env:REDIS_URL="redis://localhost:6379"; $env:MONGO_URL="mongodb://the_username:the_password@localhost:3456/the_database"; npm run dev
+
+Step 3: Create some todos to increment the counter
+--------------------------------------------------
+POST http://localhost:3000/todos
+Body: {"text": "Test todo 1"}
+
+POST http://localhost:3000/todos
+Body: {"text": "Test todo 2"}
+
+POST http://localhost:3000/todos
+Body: {"text": "Test todo 3"}
+
+Step 4: Check the statistics
+----------------------------
+GET http://localhost:3000/statistics
+Expected: {"added_todos": 3}
+
+Step 5: Stop and restart containers to test persistence
+-------------------------------------------------------
+$ docker compose -f docker-compose.dev.yml down
+$ docker compose -f docker-compose.dev.yml up -d
+
+Step 6: Restart the application server
+--------------------------------------
+$ cd todo-app/todo-backend; $env:REDIS_URL="redis://localhost:6379"; $env:MONGO_URL="mongodb://the_username:the_password@localhost:3456/the_database"; npm run dev
+
+Step 7: Check if data persisted
+-------------------------------
+GET http://localhost:3000/statistics
+Expected: {"added_todos": 3} (should be the same as before restart!)
