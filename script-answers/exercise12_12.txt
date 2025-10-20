@@ -4,7 +4,7 @@ Exercise 12.12: Persisting data in Redis
 PART 1: Test Redis data persistence (current setup)
 ---------------------------------------------------
 
-Step : Start the application and create some test data
+Step 2: Start the application and create some test data
 -------------------------------------------------------
 $ cd todo-app/todo-backend
 $ docker compose -f docker-compose.dev.yml up -d
