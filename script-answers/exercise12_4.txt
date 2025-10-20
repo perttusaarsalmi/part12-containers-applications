@@ -1,0 +1,23 @@
+# Exercise 12.4 - Ubuntu 102
+# Commands executed:
+
+# Step 1: Restart the container with index.js file
+docker start -i d1f0313b3d25
+
+# Step 2: Inside the container - install curl (needed for Node.js installation)
+apt install curl
+
+# Step 3: Inside the container - download and setup Node.js 20.x repository
+curl -sL https://deb.nodesource.com/setup_20.x | bash
+
+# Step 4: Inside the container - install Node.js
+apt install -y nodejs
+
+# Step 5: Inside the container - verify Node.js installation
+node --version
+
+# Step 6: Inside the container - run the JavaScript file
+node /usr/src/app/index.js
+
+# Step 7: Exit the container
+exit

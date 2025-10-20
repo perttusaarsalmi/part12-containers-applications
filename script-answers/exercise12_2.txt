@@ -1,0 +1,18 @@
+# Exercise 12.2 - Running Ubuntu container
+# Commands executed:
+
+# Step 1: Run Ubuntu container with interactive bash
+docker run -it ubuntu bash
+
+# Step 2: Create directory /usr/src/app (inside the container)
+mkdir /usr/src/app
+
+# Step 3: Create file /usr/src/app/index.js (inside the container)
+touch /usr/src/app/index.js
+
+# Step 4: Verify the file was created (inside the container)
+cd /usr/src/app
+ls
+
+# Step 5: Exit the container
+exit

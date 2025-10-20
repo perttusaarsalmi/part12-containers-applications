@@ -1,0 +1,30 @@
+# Exercise 12.3 - Ubuntu 101
+# Commands executed:
+
+# Step 1: List existing containers to find the one with index.js
+docker container ls -a
+
+# Step 2: Restart the container where index.js was created (d1f0313b3d25)
+docker start -i d1f0313b3d25
+
+# Step 3: Inside the container - update package lists
+apt update
+
+# Step 4: Inside the container - install nano text editor
+apt install nano
+
+# Step 5: Inside the container - navigate to the app directory
+cd /usr/src/app
+
+# Step 6: Inside the container - edit index.js with nano
+nano index.js
+
+# Step 7: Inside nano editor - add the line:
+# console.log('Hello World')
+# Then save with Ctrl+O, Enter, and exit with Ctrl+X
+
+# Step 8: Inside the container - verify the file content
+cat index.js
+
+# Step 9: Exit the container
+exit
