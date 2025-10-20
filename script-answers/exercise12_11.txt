@@ -1,0 +1,45 @@
+Exercise 12.11: Redis CLI Access and Key Management
+================================================
+
+Step 1: Start redis cli
+$ docker exec -it todo-backend-redis-1 bash
+
+
+Step 2: Find the key using KEYS *
+---------------------------------
+127.0.0.1:6379> KEYS *
+1) "added_todos"
+
+Step 3: Check the value of the key with GET
+-------------------------------------------
+127.0.0.1:6379> GET added_todos
+"1"
+
+Step 4: Set the value of the counter to 9001
+--------------------------------------------
+127.0.0.1:6379> SET added_todos 9001
+OK
+
+Step 5: Verify the new value
+---------------------------
+127.0.0.1:6379> GET added_todos
+"9001"
+
+Step 6: Delete the key from CLI
+--------------------------------
+127.0.0.1:6379> DEL added_todos
+(integer) 1
+
+127.0.0.1:6379> GET added_todos
+(nil)
+
+127.0.0.1:6379> exit
+root@ea8c2ea9864f:/data# exit
+
+Step 12: Verify counter reset after key deletion
+------------------------------------------------
+Check statistics endpoint: GET http://localhost:3000/statistics
+Expected response:
+{
+  "added_todos": 0
+}
