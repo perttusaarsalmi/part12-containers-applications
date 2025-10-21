@@ -1,0 +1,50 @@
+services:
+  nginx:
+    image: nginx:1.25-alpine
+    volumes:
+      - ./nginx.dev.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8080:80
+    container_name: reverse-proxy
+    depends_on:
+      - app
+      - backend
+
+  app:
+    image: puhelinluettelo-frontend-dev
+    build:
+      context: ./frontend
+      dockerfile: dev.Dockerfile
+    container_name: puhelinluettelo-frontend-dev
+    environment:
+      - VITE_BACKEND_URL=http://localhost:8080/api
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
+
+  backend:
+    image: puhelinluettelo-backend-dev
+    build:
+      context: ./backend
+      dockerfile: dev.Dockerfile
+    container_name: puhelinluettelo-backend-dev
+    environment:
+      - MONGODB_URI=mongodb://root:example@mongo:27017/phonebook?authSource=admin
+      - PORT=3000
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:6.0-jammy
+    ports:
+      - 3457:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: phonebook
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
