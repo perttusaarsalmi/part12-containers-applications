@@ -1,23 +1,20 @@
-# Use Ubuntu and install Node.js manually
-FROM ubuntu:latest
+FROM node:20
 
-# Set working directory inside the container
 WORKDIR /usr/src/app
 
-# Install Node.js and npm
-RUN apt-get update && \
-    apt-get install -y curl && \
-    curl -sL https://deb.nodesource.com/setup_20.x | bash - && \
-    apt-get install -y nodejs
-
-# Copy package.json and package-lock.json
+# Copy package files first for better layer caching
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+# Use npm ci for production - faster and more reliable
+RUN npm ci --only=production && npm cache clean --force
 
 # Copy the rest of the application code
 COPY . .
+
+# Create non-root user for security
+RUN groupadd -r appgroup && useradd -r -g appgroup appuser
+RUN chown -R appuser:appgroup /usr/src/app
+USER appuser
 
 # Expose port 3000
 EXPOSE 3000
